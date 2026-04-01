@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>张雨瑶个人作品集</title>
+    <!-- 引入 Tailwind CSS 进行极简排版 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Lucide 图标 -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* 隐藏横向滚动条但保持可滚动 */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-50 font-sans text-slate-800 pb-20">
+
+    <!-- 头部区域 -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-10 shadow-sm">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">张雨瑶个人作品集</h1>
+                <p class="text-lg text-slate-500 mt-1 font-medium flex items-center gap-2">
+                    <i data-lucide="briefcase" class="w-5 h-5 text-[#C7C19D]"></i>
+                    AI行业内容运营
+                </p>
+            </div>
+            <div class="flex items-center gap-3 bg-[#F5CEC7]/20 px-4 py-2.5 rounded-full border border-[#F5CEC7]/50">
+                <i data-lucide="phone" class="w-4 h-4 text-[#EBA5A5]"></i>
+                <span class="font-semibold text-slate-700">17319250730</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 简介区 -->
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-6">
+        <div class="bg-gradient-to-br from-[#EBA5A5] via-[#F5CEC7] to-[#FFCA8C] rounded-2xl p-8 sm:p-10 text-slate-800 shadow-lg relative overflow-hidden">
+            <div class="relative z-10 max-w-2xl">
+                <h2 class="text-2xl font-bold mb-3 flex items-center gap-2 text-slate-900">
+                    <div class="bg-white/40 p-1.5 rounded-lg">
+                        <i data-lucide="target" class="w-6 h-6 text-[#EBA5A5]"></i>
+                    </div>
+                    关于我
+                </h2>
+                <p class="text-slate-800 leading-relaxed text-base sm:text-lg font-medium">
+                    聚焦多模态模型训练中的数据策略与内容表达问题，擅长定义“什么是高质量内容”，并将其转化为模型可学习的结构化信号。具备从0-1搭建标注体系与规模化数据生产能力，能够在复杂协同中推动数据策略落地并直接影响模型效果。打通“内容定义—数据生产—模型训练—效果验证”闭环，过往项目已在CTR、内容消费与长期留存等核心指标上取得显著提升，擅长在内容、数据与模型之间建立连接，以数据策略驱动模型效果优化。
+                </p>
+            </div>
+            <!-- 装饰背景 -->
+            <div class="absolute top-0 right-0 -mt-10 -mr-10 opacity-20 pointer-events-none text-white">
+                <i data-lucide="layout" class="w-64 h-64"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目列表 -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 space-y-12">
+        <div class="flex items-center gap-2 mb-8 border-b border-slate-200 pb-4">
+            <i data-lucide="check-circle" class="w-7 h-7 text-[#C7C19D]"></i>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">精选项目成果</h2>
+        </div>
+
+        <div id="projects-container" class="space-y-12">
+            <!-- 项目列表将通过JS自动注入到这里 -->
+        </div>
+    </main>
+
+    <!-- 底部 -->
+    <footer class="mt-16 py-8 text-center text-slate-400 text-sm">
+        <p>© 2024 张雨瑶 · 个人作品集</p>
+    </footer>
+
+    <!-- 图片放大遮罩层 (Lightbox) -->
+    <div id="lightbox" class="fixed inset-0 z-50 bg-slate-900/95 backdrop-blur-sm hidden items-center justify-center p-4 sm:p-8" onclick="closeLightbox()">
+        <button class="absolute top-4 right-4 sm:top-8 sm:right-8 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full backdrop-blur-md transition-colors" onclick="closeLightbox(event)">
+            <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <img id="lightbox-img" src="" alt="Enlarged showcase" class="max-w-full max-h-full rounded-lg shadow-2xl object-contain" onclick="event.stopPropagation()">
+    </div>
+
+    <!-- 业务数据与交互脚本 -->
+    <script>
+        const projects = [
+            {
+                id: 1,
+                title: "富媒体",
+                role: "主导者 / 核心运营",
+                description: "针对富媒体强依赖视觉理解、难以完全规则化的问题，0-1构建了多模态ORM考点体系，刻画“富媒体意图”信号的召回区间，同时将内容质量拆解为位置、体裁、内容相关性等多个维度，并通过分档与赋分机制转化为稳定的训练信号，解决标注主观性强、模型难以学习的问题。",
+                results: "升级VLM模型上线，优化配图配视频的效果，提升用户体验。带动视频人均点击PV +23.58%，播放时长 +1.20%，主端严口径LT +2.32%，问答卡CTR +3.28% ，主动路径LT +2.32%",
+                images: [
+                    "https://raw.githubusercontent.com/zhangyuyao123-byte/work.github.io/fdf841c830118bbd7bbe935a692223ee2a374484/%E5%AF%8C%E5%AA%92%E4%BD%93/%E5%AF%8C%E5%AA%92%E4%BD%93showcase1.png",
+                    "https://raw.githubusercontent.com/zhangyuyao123-byte/work.github.io/fdf841c830118bbd7bbe935a692223ee2a374484/%E5%AF%8C%E5%AA%92%E4%BD%93/%E5%AF%8C%E5%AA%92%E4%BD%93showcase2.png",
+                    "https://raw.githubusercontent.com/zhangyuyao123-byte/work.github.io/fdf841c830118bbd7bbe935a692223ee2a374484/%E5%AF%8C%E5%AA%92%E4%BD%93/%E5%AF%8C%E5%AA%92%E4%BD%93showcase3.png",
+                    "https://raw.githubusercontent.com/zhangyuyao123-byte/work.github.io/fdf841c830118bbd7bbe935a692223ee2a374484/%E5%AF%8C%E5%AA%92%E4%BD%93/%E5%AF%8C%E5%AA%92%E4%BD%93showcase4.png"
+                ]
+            },
+            {
+                id: 2,
+                title: "AI画布",
+                role: "核心构建者",
+                description: "从传统的Markdown长图文形布局，升级为更加智能的自由画布布局，推动AI搜索信息消费升级。我从0搭建了30人+的画布标注团队，0-1打磨画布标注标准并实现规模化标注，降低画布的内容幻觉问题，提升配图配视频的准确率与质量。",
+                results: "拉动24–30岁及一线城市高价值人群活跃度提升约0.7%，AI搜索中间页活跃天 +6.07%",
+                images: [
+                    "https://raw.githubusercontent.com/zhangyuyao123-byte/work.github.io/refs/heads/main/%E7%94%BB%E5%B8%83/AI%E7%94%BB%E5%B8%83showcase1.png",
+                    "https://raw.githubusercontent.com/zhangyuyao123-byte/work.github.io/refs/heads/main/%E7%94%BB%E5%B8%83/AI%E7%94%BB%E5%B8%83showcase2.png",
+                    "https://raw.githubusercontent.com/zhangyuyao123-byte/work.github.io/refs/heads/main/%E7%94%BB%E5%B8%83/AI%E7%94%BB%E5%B8%83showcase3.png"
+                ]
+            },
+            {
+                id: 3,
+                title: "智能组件",
+                role: "机制设计与标注负责人",
+                description: "从0-1建设并支持AI搜回答能够在回答中调用组件。我定义了不同场景下，不同需求应该由对应的组件承接，并且规模化标注，提升模型对组件的召回率与准确率。通过建立这套组件调用触发机制，解决了AI回答「长篇大论却抓不住重点」的问题，让信息获取更高效。",
+                results: "AI结果主动有点比 +4.9331%，问答卡首位影响面 +1.40%、问答卡CTR +3.19%，换query率 -1.37%，人均复搜PV -3.01%",
+                images: [
+                    "https://raw.githubusercontent.com/zhangyuyao123-byte/work.github.io/refs/heads/main/%E7%BB%84%E4%BB%B6/%E7%BB%84%E4%BB%B6showcase1.jpeg",
+                    "https://raw.githubusercontent.com/zhangyuyao123-byte/work.github.io/refs/heads/main/%E7%BB%84%E4%BB%B6/%E7%BB%84%E4%BB%B6showcase2.jpeg",
+                    "https://raw.githubusercontent.com/zhangyuyao123-byte/work.github.io/refs/heads/main/%E7%BB%84%E4%BB%B6/%E7%BB%84%E4%BB%B6showcase3.jpeg"
+                ]
+            },
+            {
+                id: 4,
+                title: "视觉搜索",
+                role: "标注体系设计与流程优化",
+                description: "负责视觉搜索rubrics考点标注体系设计与数据生产，支撑奖励模型训练与效果优化。制定rubrics考点标注标准，围绕模型易错难例设计高区分度训练信号；针对高难样本标注成本高的问题，筛选“人可理解+模型易出错”的高价值样本，优化数据分布。接入AIDP平台外验插件与机标能力，结合异常case过滤与流程优化，在保障高难样本训练价值的同时，实现数据质量与生产效率的同步提升。",
+                results: "反转下视觉搜索30lt+1.92%，30s视觉手搜转化+0.05%；AI卡结果体验0/1分率降低4%",
+                images: [
+                    "https://raw.githubusercontent.com/zhangyuyao123-byte/work.github.io/refs/heads/main/%E8%A7%86%E8%A7%89%E6%90%9C%E7%B4%A2/%E8%A7%86%E8%A7%89%E6%90%9C%E7%B4%A2showcase1.png",
+                    "https://raw.githubusercontent.com/zhangyuyao123-byte/work.github.io/refs/heads/main/%E8%A7%86%E8%A7%89%E6%90%9C%E7%B4%A2/%E8%A7%86%E8%A7%89%E6%90%9C%E7%B4%A2showcase2.png",
+                    "https://raw.githubusercontent.com/zhangyuyao123-byte/work.github.io/refs/heads/main/%E8%A7%86%E8%A7%89%E6%90%9C%E7%B4%A2/%E8%A7%86%E8%A7%89%E6%90%9C%E7%B4%A2showcase3.png",
+                    "https://raw.githubusercontent.com/zhangyuyao123-byte/work.github.io/refs/heads/main/%E8%A7%86%E8%A7%89%E6%90%9C%E7%B4%A2/%E8%A7%86%E8%A7%89%E6%90%9C%E7%B4%A2showcase4.png"
+                ]
+            },
+            {
+                id: 5,
+                title: "AI对话体验",
+                role: "策略设计与体验优化",
+                description: "负责「灵感出词（RS词）」标注策略设计，基于用户行为与上下文建模搜索意图；主导「看后搜」问答体验优化，定义视频后提问场景下的回答评测标准（相关性、上下文理解、可行动性）；推动AI人格化专项，优化回答结构与表达方式（如结论前置、建议导向、语气一致性）。",
+                results: "灵感词模块人均点击+5.92%，点击渗透+8.74%。人工评估LLM出词在搜前场景可用率93%。通过agent搭建提升标注人效15.3%",
+                images: []
+            },
+            {
+                id: 6,
+                title: "权威信源",
+                role: "信源引入与机制设计",
+                description: "针对大模型生成内容在高风险场景下的可信度问题，主导权威信源引入与标注策略设计，产出SFT+DPO训练数据，支撑模型可信度优化；推动权威作者提权与保送机制设计，并在回答侧实现权威信息外显。",
+                results: "视频人均播放时长+3.91%,整体session均停留时长+2.90%；人均手搜活跃天(进组用户)+1.97%,手搜uv渗透+2.08%",
+                images: [
+                    "https://raw.githubusercontent.com/zhangyuyao123-byte/work.github.io/refs/heads/main/%E6%9D%83%E5%A8%81%E4%BF%A1%E6%BA%90/%E6%9D%83%E5%A8%81%E4%BF%A1%E6%BA%90showcase1.png",
+                    "https://raw.githubusercontent.com/zhangyuyao123-byte/work.github.io/refs/heads/main/%E6%9D%83%E5%A8%81%E4%BF%A1%E6%BA%90/%E6%9D%83%E5%A8%81%E4%BF%A1%E6%BA%90showcase2.png"
+                ]
+            }
+        ];
+
+        // 高亮业务指标数字
+        function highlightNumbers(text) {
+            const regex = /([+-]?\d+(?:\.\d+)?%?)/g;
+            return text.replace(regex, '<span class="text-slate-800 font-bold bg-[#FFCA8C]/40 border border-[#FFCA8C]/60 px-1.5 py-0.5 rounded mx-0.5">$1</span>');
+        }
+
+        const container = document.getElementById('projects-container');
+
+        // 动态生成项目列表
+        projects.forEach(project => {
+            let imagesHtml = '';
+            if (project.images && project.images.length > 0) {
+                const imgList = project.images.map((img, idx) => `
+                    <div class="snap-start shrink-0 w-[75%] sm:w-[45%] md:w-[35%] aspect-[3/4] sm:aspect-auto sm:h-64 relative rounded-xl overflow-hidden cursor-zoom-in group border border-slate-200 shadow-sm" onclick="openLightbox('${img}')">
+                        <img src="${img}" alt="${project.title} showcase ${idx + 1}" class="w-full h-full object-cover sm:object-contain bg-slate-50 transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                            <span class="opacity-0 group-hover:opacity-100 bg-white/90 text-slate-900 text-xs font-medium px-3 py-1.5 rounded-full shadow-sm backdrop-blur-sm transition-opacity">点击放大</span>
+                        </div>
+                    </div>
+                `).join('');
+
+                imagesHtml = `
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1">
+                            Showcase 展示 <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </h4>
+                        <div class="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory hide-scrollbar">
+                            ${imgList}
+                        </div>
+                    </div>
+                `;
+            }
+
+            const article = document.createElement('article');
+            article.className = "bg-white rounded-2xl shadow-sm border border-[#F5CEC7]/40 overflow-hidden hover:shadow-md transition-shadow duration-300";
+            article.innerHTML = `
+                <div class="p-6 sm:p-8">
+                    <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 mb-5">
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-900">${project.title}</h3>
+                        <span class="text-sm font-medium text-slate-700 bg-[#C7C19D]/20 px-3 py-1 rounded-full w-fit">${project.role}</span>
+                    </div>
+                    <div class="prose prose-slate max-w-none text-slate-600 mb-6 text-sm sm:text-base leading-relaxed">
+                        <p>${project.description}</p>
+                    </div>
+                    <div class="bg-[#F5CEC7]/15 border border-[#EBA5A5]/20 rounded-xl p-5 mb-6">
+                        <h4 class="text-[#A06060] font-bold mb-2 flex items-center gap-2 text-sm sm:text-base">
+                            <i data-lucide="trending-up" class="w-5 h-5 text-[#EBA5A5]"></i>
+                            量化业务成果
+                        </h4>
+                        <p class="text-slate-700 text-sm sm:text-base leading-relaxed">${highlightNumbers(project.results)}</p>
+                    </div>
+                    ${imagesHtml}
+                </div>
+            `;
+            container.appendChild(article);
+        });
+
+        // 渲染页面内的图标
+        lucide.createIcons();
+
+        // 图片放大的交互逻辑
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+        }
+
+        function closeLightbox(event) {
+            if(event) event.stopPropagation();
+            lightbox.classList.add('hidden');
+            lightbox.classList.remove('flex');
+            lightboxImg.src = '';
+            document.body.style.overflow = 'auto'; // 恢复滚动
+        }
+    </script>
+</body>
+</html>
